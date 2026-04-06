@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAN KAPUAS - Tools Matematika</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <script>
+tailwind.config={theme:{extend:{colors:{mint:{"50":"#f0fdf4","100":"#dcfce7","200":"#bbf7d0","300":"#86efac","400":"#4ade80","500":"#22c55e","600":"#16a34a","700":"#15803d"},slate:{"850":"#141c2e"}},fontFamily:{sans:["Plus Jakarta Sans","sans-serif"],mono:["JetBrains Mono","monospace"]}}}}
+</script>
+  <style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;font-family:'Plus Jakarta Sans',sans-serif}
+.glass{background:rgba(255,255,255,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.3)}
+.tool-card{transition:all .3s cubic-bezier(.4,0,.2,1)}
+.tool-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(34,197,94,0.15)}
+.fade-in{animation:fadeIn .5s ease forwards;opacity:0}
+@keyframes fadeIn{to{opacity:1}}
+.grad-hero{background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 30%,#bbf7d0 60%,#f0fdf4 100%)}
+.grad-section{background:linear-gradient(180deg,#ffffff 0%,#f0fdf4 100%)}
+.btn-primary{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;transition:all .25s}
+.btn-primary:hover{background:linear-gradient(135deg,#16a34a,#15803d);transform:scale(1.03)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-content{background:#fff;border-radius:16px;max-width:600px;width:92%;max-height:85%;overflow-y:auto;transform:scale(.9);transition:transform .3s}
+.modal-overlay.active .modal-content{transform:scale(1)}
+.tab-btn{padding:8px 20px;border-radius:9999px;font-weight:600;cursor:pointer;transition:all .2s;border:2px solid transparent}
+.tab-btn.active{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border-color:transparent}
+.tab-btn:not(.active){color:#15803d;border-color:#bbf7d0}
+.tab-btn:not(.active):hover{background:#f0fdf4}
+input[type="number"],input[type="text"],select,textarea{border:2px solid #dcfce7;border-radius:10px;padding:10px 14px;font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .2s;width:100%;font-size:15px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#22c55e}
+.result-box{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #bbf7d0;border-radius:12px;padding:16px;margin-top:12px;font-weight:600;color:#15803d}
+.scroll-top{position:fixed;bottom:24px;right:24px;z-index:50;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:all .3s;pointer-events:none}
+.scroll-top.show{opacity:1;pointer-events:all}
+.video-card{transition:all .3s}
+.video-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(34,197,94,0.12)}
+.nav-link{position:relative;transition:color .2s}
+.nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:#22c55e;transition:width .2s}
+.nav-link:hover::after{width:100%}
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-white text-gray-800 overflow-auto" id="app-body"><!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 w-full z-50 glass" id="navbar">
+   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center"><i data-lucide="book-open" class="w-5 h-5 text-white"></i>
+     </div>
+     <div>
+      <h1 class="font-extrabold text-green-700 text-lg leading-tight" id="nav-title">MAN KAPUAS</h1>
+      <p class="text-[11px] text-green-500 font-medium">Tools Matematika</p>
+     </div>
+    </div>
+    <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600"><a href="#hero" class="nav-link hover:text-green-600">Beranda</a> <a href="#videos" class="nav-link hover:text-green-600">Video</a> <a href="#about" class="nav-link hover:text-green-600">Tentang</a>
+    </div><button class="md:hidden text-green-600" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"> <i data-lucide="menu" class="w-6 h-6"></i> </button>
+   </div>
+   <div id="mobile-menu" class="hidden md:hidden px-4 pb-3 flex flex-col gap-2 text-sm font-semibold text-gray-600"><a href="#hero" class="py-2 hover:text-green-600" onclick="this.parentElement.classList.add('hidden')">Beranda</a> <a href="#videos" class="py-2 hover:text-green-600" onclick="this.parentElement.classList.add('hidden')">Video</a> <a href="#about" class="py-2 hover:text-green-600" onclick="this.parentElement.classList.add('hidden')">Tentang</a>
+   </div>
+  </nav><!-- HERO -->
+  <section id="hero" class="grad-hero pt-28 pb-16 px-4">
+   <div class="max-w-4xl mx-auto text-center fade-in" style="animation-delay:.1s">
+    <div class="inline-flex items-center gap-2 bg-white/70 rounded-full px-4 py-2 text-sm font-semibold text-green-600 mb-6 shadow-sm"><i data-lucide="sparkles" class="w-4 h-4"></i> <span>Platform Pembelajaran Digital</span>
+    </div>
+    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight" id="hero-title">Platform Video<br><span class="bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent">Pembelajaran Matematika</span></h2>
+    <p class="text-gray-500 text-lg max-w-2xl mx-auto mb-8" id="hero-sub">Koleksi video pembelajaran komprehensif untuk siswa kelas 10–12 SMA/MA/SMK sederajat.</p>
+    <div class="flex flex-wrap justify-center gap-4"><a href="#videos" class="btn-primary px-8 py-3 rounded-full font-bold text-base inline-flex items-center gap-2 shadow-lg shadow-green-200"><i data-lucide="play-circle" class="w-5 h-5"></i>Mulai Belajar</a> <a href="#videos" class="px-8 py-3 rounded-full font-bold text-base inline-flex items-center gap-2 border-2 border-green-300 text-green-600 hover:bg-green-50 transition"><i data-lucide="list" class="w-5 h-5"></i>Lihat Semua Video</a>
+    </div>
+    <div class="flex justify-center gap-8 mt-10 text-center">
+     <div>
+      <p class="text-2xl font-extrabold text-green-600" id="video-count">30+</p>
+      <p class="text-xs text-gray-400 font-medium">Video Berkualitas</p>
+     </div>
+     <div>
+      <p class="text-2xl font-extrabold text-green-600">3</p>
+      <p class="text-xs text-gray-400 font-medium">Tingkat Kelas</p>
+     </div>
+     <div>
+      <p class="text-2xl font-extrabold text-green-600">100%</p>
+      <p class="text-xs text-gray-400 font-medium">Gratis</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- VIDEOS SECTION -->
+  <section id="videos" class="py-20 px-4 bg-white">
+   <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+     <h3 class="text-4xl font-extrabold text-gray-900 mb-3">Koleksi Video Pembelajaran</h3>
+     <p class="text-gray-500 text-lg">Pilih tingkat kelas untuk melihat video yang tersedia</p>
+    </div>
+    <div class="flex justify-center gap-3 mb-12 flex-wrap" id="video-tab-container"><button class="tab-btn active" onclick="showVideoGrade(10)">Kelas 10</button> <button class="tab-btn" onclick="showVideoGrade(11)">Kelas 11</button> <button class="tab-btn" onclick="showVideoGrade(12)">Kelas 12</button>
+    </div>
+    <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+   </div>
+  </section><!-- ABOUT SECTION -->
+  <section id="about" class="py-16 px-4 bg-gradient-to-b from-white to-green-50">
+   <div class="max-w-3xl mx-auto">
+    <div class="bg-white rounded-2xl p-8 border border-green-100 shadow-sm">
+     <h3 class="text-2xl font-extrabold text-gray-900 mb-4">Tentang Kami</h3>
+     <p class="text-gray-600 mb-4">MUHAMMAD JEPRY - LEAD DEVELOPER</p>
+       <p class="text-gray-600 mb-4">ATHAR MUHAMMAD HALLYF S. - LEAD CODING</p>
+       <p class="text-gray-600 mb-4">MUHAMMAD TSAQIB AQIIL M. - UI/UX DESIGNER</p>
+       <p class="text-gray-600 mb-4">MUHAMMAD RIDHO - QUALITY CONTROL</p>
+     <div class="grid grid-cols-3 gap-4 mt-6">
+      <div class="text-center">
+       <div class="text-3xl font-bold text-green-600 mb-1">
+        30+
+       </div>
+       <p class="text-sm text-gray-600">Video Pembelajaran</p>
+      </div>
+      <div class="text-center">
+       <div class="text-3xl font-bold text-green-600 mb-1">
+        100%
+       </div>
+       <p class="text-sm text-gray-600">Akses Gratis</p>
+      </div>
+      <div class="text-center">
+       <div class="text-3xl font-bold text-green-600 mb-1">
+        HD
+       </div>
+       <p class="text-sm text-gray-600">Kualitas Video</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- FOOTER -->
+  <footer class="bg-gradient-to-r from-green-700 to-green-900 text-white py-10 px-4">
+   <div class="max-w-6xl mx-auto text-center">
+    <div class="flex justify-center items-center gap-3 mb-3">
+     <div class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+      <i data-lucide="book-open" class="w-4 h-4"></i>
+     </div><span class="font-bold text-lg" id="footer-name">MAN KAPUAS</span>
+    </div>
+    <p class="text-green-200 text-sm" id="footer-txt">© 2026 MAN KAPUAS — Tools Pendukung Pembelajaran Matematika</p>
+   </div>
+  </footer><!-- TOOL MODAL -->
+  <div class="modal-overlay" id="tool-modal">
+   <div class="modal-content p-6" id="modal-inner">
+    <div class="flex items-center justify-between mb-4">
+     <h4 class="text-xl font-bold text-green-700" id="modal-title">Tool</h4><button onclick="closeModal()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition"><i data-lucide="x" class="w-5 h-5 text-gray-500"></i></button>
+    </div>
+    <div id="modal-body"></div>
+   </div>
+  </div><!-- SCROLL TOP -->
+  <div class="scroll-top btn-primary shadow-xl" id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i data-lucide="chevron-up" class="w-6 h-6"></i>
+  </div>
+  <script>
+// ============================================================
+// VIDEOS DATA
+// ============================================================
+const VIDEOS = [
+  { title: "Persamaan Kuadrat Lengkap", desc: "Memahami cara mencari akar-akar persamaan kuadrat", url: "https://www.youtube.com/embed/Llr4Gjt9O6o?si=NzSq2_MjBk5VrDtU", grade: "Kelas 10" },
+  { title: "Sistem Persamaan Linear 3 Variabel", desc: "SPLTV dan metode eliminasi-substitusi", url: "https://www.youtube.com/embed/kvGsIo1TmsM", grade: "Kelas 10" },
+  { title: "Fungsi dan Grafik", desc: "Memahami fungsi linear dan kuadrat secara mendalam", url: "https://www.youtube.com/embed/0oGJTQCy4cQ", grade: "Kelas 10" },
+  { title: "Logaritma dan Sifat-sifatnya", desc: "Operasi logaritma dan penerapannya", url: "https://www.youtube.com/embed/WUvTyaaNkzM", grade: "Kelas 10" },
+  { title: "Barisan dan Deret Aritmetika", desc: "Mencari suku dan jumlah barisan aritmetika", url: "https://www.youtube.com/embed/rfG8ce4nNh0", grade: "Kelas 10" },
+  { title: "Barisan dan Deret Geometri", desc: "Deret geometri tak hingga dan aplikasinya", url: "https://www.youtube.com/embed/SzZ6GpcfoQY", grade: "Kelas 10" },
+  
+  { title: "Matriks Operasi Dasar", desc: "Penjumlahan, pengurangan, dan perkalian matriks", url: "https://www.youtube.com/embed/-2pSwVmHySY?si=nxPhismhQvz9Szc7", grade: "Kelas 11" },
+  { title: "Determinan dan Invers Matriks", desc: "Menghitung determinan dan invers matriks 2x2 dan 3x3", url: "https://www.youtube.com/embed/kvGsIo1TmsM", grade: "Kelas 11" },
+  { title: "Trigonometri: Sin, Cos, Tan", desc: "Fungsi trigonometri dan identitas dasar", url: "https://www.youtube.com/embed/0oGJTQCy4cQ", grade: "Kelas 11" },
+  { title: "Aturan Sinus dan Cosinus", desc: "Menyelesaikan segitiga dengan aturan sinus-cosinus", url: "https://www.youtube.com/embed/WUvTyaaNkzM", grade: "Kelas 11" },
+  { title: "Kombinatorika Dasar", desc: "Permutasi dan kombinasi dalam pemecahan masalah", url: "https://www.youtube.com/embed/rfG8ce4nNh0", grade: "Kelas 11" },
+  { title: "Peluang Sederhana", desc: "Konsep dasar teori peluang dan kaidah penjumlahan", url: "https://www.youtube.com/embed/SzZ6GpcfoQY", grade: "Kelas 11" },
+  
+  { title: "Limit Fungsi Aljabar", desc: "Teknik menyelesaikan limit dengan substitusi dan pemfaktoran", url: "https://www.youtube.com/embed/XdhZOzMSM0Y?si=-rziQzNzHmgC-1n6", grade: "Kelas 12" },
+  { title: "Turunan: Aturan Dasar", desc: "Turunan polinomial dan aturan perkalian/pembagian", url: "https://www.youtube.com/embed/kvGsIo1TmsM", grade: "Kelas 12" },
+  { title: "Aplikasi Turunan", desc: "Nilai maksimum, minimum, dan titik belok fungsi", url: "https://www.youtube.com/embed/0oGJTQCy4cQ", grade: "Kelas 12" },
+  { title: "Integral Tak Tentu", desc: "Integral fungsi polinomial dan aplikasinya", url: "https://www.youtube.com/embed/WUvTyaaNkzM", grade: "Kelas 12" },
+  { title: "Integral Tentu", desc: "Menghitung luas daerah dengan integral tentu", url: "https://www.youtube.com/embed/rfG8ce4nNh0", grade: "Kelas 12" },
+  { title: "Statistika Deskriptif", desc: "Mean, median, modus, dan ukuran penyebaran data", url: "https://www.youtube.com/embed/SzZ6GpcfoQY", grade: "Kelas 12" },
+  { title: "Distribusi Normal", desc: "Kurva normal dan aplikasi dalam probabilitas", url: "https://www.youtube.com/embed/c7E-dBicvjY?si=Qsq3RgQhHJ0YBGmi", grade: "Kelas 12" },
+  { title: "Program Linear", desc: "Menentukan nilai optimum dengan metode grafis", url: "https://www.youtube.com/embed/kvGsIo1TmsM", grade: "Kelas 12" },
+];
+
+// ============================================================
+// TOOLS DATA - REMOVED (FOKUS KE VIDEO)
+// ============================================================
+// Semua tools telah dihapus, fokus penuh ke video pembelajaran
+
+// ============================================================
+// RENDER FUNCTIONS
+// ============================================================
+function showVideoGrade(g){
+  document.querySelectorAll('#video-tab-container .tab-btn').forEach((b,i)=>{
+    b.classList.toggle('active', [10,11,12][i]===g);
+  });
+  renderVideosByGrade(g);
+}
+
+function renderVideosByGrade(grade){
+  const grid = document.getElementById('video-grid');
+  const videos = VIDEOS.filter(v => v.grade === `Kelas ${grade}`);
+  grid.innerHTML = videos.map((v,i)=>`
+    <div class="video-card bg-white rounded-2xl overflow-hidden border border-green-100 shadow-sm fade-in cursor-pointer" style="animation-delay:${i*0.08}s" onclick="openVideo('${v.title}', '${v.url}')">
+      <div class="aspect-video bg-gray-200 relative overflow-hidden group">
+        <iframe src="${v.url}" class="w-full h-full pointer-events-none" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition flex items-center justify-center">
+          <div class="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white transition">
+            <i data-lucide="play" class="w-6 h-6 text-green-600 ml-1"></i>
+          </div>
+        </div>
+      </div>
+      <div class="p-4">
+        <span class="text-xs font-semibold text-green-500 bg-green-50 px-2 py-1 rounded-full">${v.grade}</span>
+        <h4 class="font-bold text-gray-900 mt-2 line-clamp-2">${v.title}</h4>
+        <p class="text-sm text-gray-500 mt-1">${v.desc}</p>
+        <div class="mt-3 text-green-600 text-sm font-semibold flex items-center gap-1">Tonton <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+// ============================================================
+// MODAL - Video Only
+// ============================================================
+function openVideo(title, url){
+  const modal = document.getElementById('tool-modal');
+  const titleEl = document.getElementById('modal-title');
+  const body = document.getElementById('modal-body');
+  titleEl.textContent = title;
+  body.innerHTML = `
+    <div class="aspect-video bg-gray-200 rounded-lg overflow-hidden">
+      <iframe src="${url}" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <div class="mt-4 text-gray-600 text-sm">
+      <p>Video ini merupakan bagian dari koleksi pembelajaran Matematika MAN KAPUAS.</p>
+      <p class="mt-2">💡 Tonton video ini sampai selesai dan catat poin-poin penting untuk memaksimalkan pembelajaran.</p>
+    </div>
+  `;
+  modal.classList.add('active');
+  lucide.createIcons();
+}
+function closeModal(){document.getElementById('tool-modal').classList.remove('active')}
+document.getElementById('tool-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()});
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('scroll',()=>{
+  const btn=document.getElementById('scroll-top-btn');
+  btn.classList.toggle('show', window.scrollY>400);
+});
+
+showVideoGrade(10);
+lucide.createIcons();
+
+// ============================================================
+// ELEMENT SDK
+// ============================================================
+const defaultConfig = {
+  school_name: "MAN KAPUAS",
+  hero_subtitle: "Tools Pendukung Pembelajaran Matematika",
+  footer_text: "© 2036 MAN KAPUAS — Tools Pendukung Pembelajaran Matematika",
+  background_color: "#f0fdf4",
+  surface_color: "#ffffff",
+  text_color: "#111827",
+  primary_action_color: "#22c55e",
+  secondary_action_color: "#15803d",
+  font_family: "Plus Jakarta Sans",
+  font_size: 16
+};
+
+function applyConfig(config) {
+  const c = key => config[key] || defaultConfig[key];
+
+  document.getElementById('nav-title').textContent = c('school_name');
+  document.getElementById('footer-name').textContent = c('school_name');
+  document.getElementById('footer-txt').textContent = c('footer_text');
+
+  const body = document.getElementById('app-body');
+  body.style.color = c('text_color');
+  body.style.fontFamily = c('font_family') + ', Plus Jakarta Sans, sans-serif';
+
+  const hero = document.getElementById('hero');
+  if(hero) hero.style.background = `linear-gradient(135deg, ${c('background_color')}, ${c('surface_color')})`;
+
+  document.querySelectorAll('.btn-primary').forEach(el => {
+    el.style.background = `linear-gradient(135deg, ${c('primary_action_color')}, ${c('secondary_action_color')})`;
+  });
+
+  const baseSize = c('font_size');
+  const heroTitle = document.getElementById('hero-title');
+  if(heroTitle) heroTitle.style.fontSize = (baseSize * 2.5) + 'px';
+  const heroSub = document.getElementById('hero-sub');
+  if(heroSub) heroSub.style.fontSize = (baseSize * 1.1) + 'px';
+}
+
+if (window.elementSdk) {
+  window.elementSdk.init({
+    defaultConfig,
+    onConfigChange: async (config) => { applyConfig(config); },
+    mapToCapabilities: (config) => ({
+      recolorables: [
+        { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+        { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+        { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+        { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+        { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } },
+      ],
+      borderables: [],
+      fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); } },
+      fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } },
+    }),
+    mapToEditPanelValues: (config) => new Map([
+      ["school_name", config.school_name || defaultConfig.school_name],
+      ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+      ["footer_text", config.footer_text || defaultConfig.footer_text],
+    ])
+  });
+}
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e6d99ceb7428223',t:'MTc3NTI3NzI2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
